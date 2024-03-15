@@ -66,6 +66,8 @@ function sendEmail(form)関数内の以下の部分を、店舗情報に書き�
 '※ご予約のキャンセルは\n' + 'Reservation cancellation form\nよりご連絡をお願いいたします。\n\n'
 の部分は、taichan-33/reservation cancell formで作成したURLに書き換えてください。
 
+最後にGAS編集画面でサービスに「gmail」と「calender」APIを追加してください。
+
 
 2. app.htmlの編集
 ```<h1 class="form-title">Your shop name予約フォーム</h1>```
