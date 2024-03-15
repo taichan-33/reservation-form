@@ -140,7 +140,7 @@ function sendEmail(form) {
              '●お問合せ\n' +
              '　名称：Your company name\n' +
              '　住所：Your company address \n' +
-             '　TEL：072-947-9399 \n' +
+             '　TEL：Your Tell number \n' +
              '　E-Mail：Your E-mail\n' +
              '　営業時間：Your business hour\n' +
              '------------------------------------------------------------------\n' +
