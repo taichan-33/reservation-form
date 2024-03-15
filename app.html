@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <base target="_top">
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+      background-color: #f5f5f5;
+      margin: 0;
+    }
+
+    .form-title {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    @media screen and (max-width: 600px) {
+      .container {
+        padding: 20px 0;
+      }
+    }
+
+    .form {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .form h1 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .form input,
+    .form select {
+      width: 90%;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background-color: #f5f5f5;
+      height: 25px; /* ここで高さを設定 */
+    }
+
+    .form textarea {
+      width: 90%;
+      padding: 5px 10px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      background-color: #f5f5f5;
+      height: 100px; /* ここで高さを設定 */
+    }
+
+    .form input[type="submit"] {
+      background-color: #4285f4;
+      border-color: #4285f4;
+      color: #ffffff;
+      cursor: pointer;
+      font-weight: 500;
+      margin-top: 10px;
+      height: 25px; /* ここで高さを設定 */
+    }
+
+    .form input[type="submit"]:hover {
+      background-color: #2a75f3;
+      border-color: #2a75f3;
+    }
+
+    .form select,
+    .form input[type="submit"] {
+       width: 100%;
+      height: 35px; /* ここで高さを設定 */
+     }
+
+
+    .confirmation-message {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 5px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+      max-width: 400px;
+      width: 100%;
+    }
+
+    .confirmation-message h2 {
+      font-size: 24px;
+      font-weight: 500;
+      margin-top: 0;
+      margin-bottom: 20px;
+    }
+
+    .confirmation-message p {
+      font-size: 16px;
+      margin: 10px 0;
+      background-color: #f5f5f5;
+      padding: 10px;
+      border-radius: 3px;
+    }
+.spinner {
+  display: none; /* 初期状態では非表示 */
+  position: fixed; /* fixed or absolute */
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 150px;
+  height: 150px;
+}
+
+.spinner .line {
+  box-sizing: border-box;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: spin 1.5s linear infinite;
+}
+
+.spinner .line1 {
+  border: 2px solid red;
+  border-bottom-color: transparent;
+}
+
+.spinner .line2 {
+  border: 2px solid blue;
+  border-top-color: transparent;
+  animation-delay: -1.5s; /* 2つの線が同時に動かないようにする */
+}
+
+.spinner .text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  font-size: 25px;
+  color: black;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+  </style>
+
+</head>
+
+ <body>
+  <!-- スピナーを追加 -->
+    <div class="spinner">
+    <div class="line line1"></div>
+    <div class="line line2"></div>
+    <div class="text">Booking...</div>
+</div>
+  <div class="container">
+    <div class="form">
+      <h1 class="form-title">Your shop name予約フォーム</h1>
+    <form id="reservationForm" onsubmit="event.preventDefault(); submitForm();">
+      <label for="name">お名前<span class="required">*</span></label>
+      <input type="text" id="name" name="name" required><br><br>
+      <label for="phone">電話番号<span class="required">*</span></label>
+      <input type="text" id="phone" name="phone" required><br><br>
+      <label for="email">メールアドレス<span class="required">*</span></label>
+      <input type="email" id="email" name="email" required><br><br>
+      <label for="reservationType" style="display: inline-block; width: 80px;">予約内容<span class="required">*</span></label>
+      <select id="reservationType" name="reservationType" required>
+        <option value="プランA">プランA</option>
+        <option value="プランB">プランB</option>
+        <option value="プランC">プランC</option>
+        <option value="プランD">プランD</option>
+      </select><br><br>
+      <label for="reservationDate">予約日<span class="required">*</span></label>
+      <input type="date" id="reservationDate" name="reservationDate" required><br><br>
+      <label for="reservationTime" style="display: inline-block; width: 80px; vertical-align: top;">予約時間<span class="required">*</span></label>
+<span style="color: red; margin-left: 3px; font-size: 0.7em; display: inline-block;">
+（表示されない時間帯は予約不可）</span>
+      <select id="reservationTime" name="reservationTime" required></select><br><br>
+      <label for="remarks" style="display: inline-block; width: 50px; vertical-align: top;">備考</label>
+      <textarea id="remarks" name="remarks" rows="4"></textarea>
+      <input type="submit" value="予約">
+    </form>
+    <style>
+      .required {
+        color: red;
+        margin-left: 5px;
+      }
+    </style>
+    <script>
+      document.getElementById('reservationDate').addEventListener('change', function() {
+        var selectedDate = this.value;
+        if (selectedDate) {
+          google.script.run.withSuccessHandler(function(availableTimes) {
+            var reservationTimeSelect = document.getElementById('reservationTime');
+            reservationTimeSelect.innerHTML = '';
+            availableTimes.forEach(function(time) {
+              var option = document.createElement('option');
+              option.value = time;
+              option.text = time;
+              reservationTimeSelect.add(option);
+            });
+          }).getAvailableTimes(selectedDate);
+        }
+      });
+
+      function submitForm() {
+  var form = document.getElementById('reservationForm');
+  var formData = getFormData(form);
+  // スピナーを表示
+      document.querySelector('.spinner').style.display = 'block';
+
+
+  // サーバー側の関数を呼び出す
+  google.script.run
+    .withSuccessHandler(function() {
+       // スピナーを非表示
+          document.querySelector('.spinner').style.display = 'none';
+          
+      displayConfirmation(formData);
+    })
+    .processForm(formData);
+}
+
+
+      function getFormData(form) {
+        return {
+          name: form.querySelector('#name').value,
+          phone: form.querySelector('#phone').value,
+          email: form.querySelector('#email').value,
+          reservationType: form.querySelector('#reservationType').value,
+          reservationDate: form.querySelector('#reservationDate').value,
+          reservationTime: form.querySelector('#reservationTime').value,
+          remarks: form.querySelector('#remarks').value
+        };
+      }
+
+     function displayConfirmation(formData) {
+  document.querySelector('.form-title').style.display = 'none';
+  document.getElementById('reservationForm').style.display = 'none';
+
+  var confirmationMessage = document.createElement('div');
+  confirmationMessage.className = 'confirmation-message';
+  confirmationMessage.style.textAlign = 'center';
+  confirmationMessage.style.padding = '20px';
+  confirmationMessage.style.backgroundColor = 'white';
+  confirmationMessage.style.borderRadius = '5px';
+  confirmationMessage.style.boxShadow = '0px 0px 20px rgba(0, 0, 0, 0.1)';
+  confirmationMessage.style.maxWidth = '400px';
+  confirmationMessage.style.width = '100%';
+  
+ var company = 'Your shop name';
+company = company.replace(/I/g, function(match, offset) {
+  if (offset === 2) { // 3番目の文字はオフセットが2となります
+    return '<span style="color:red;">I</span>';
+  } else if (offset === 6) { // 7番目の文字はオフセットが6となります
+    return '<span style="color:blue;">I</span>';
+  }
+  return match;
+});
+  confirmationMessage.innerHTML = '<h2>' + company + 'Your shop name<br>予約が確定しました</h2>' +
+                                   '<p>【お名前】 ' + formData.name + '</p>' +
+                                   '<p>【電話番号】 ' + formData.phone + '</p>' +
+                                   '<p>【メールアドレス】 ' + formData.email + '</p>' +
+                                   '<p>【予約内容】 ' + formData.reservationType + '</p>' +
+                                   '<p>【予約日】 ' + formData.reservationDate + '</p>' +
+                                   '<p>【予約時間】 ' + formData.reservationTime.split('-')[0] + ' - ' + formData.reservationTime.split('-')[1] + '</p>' +
+                                   '<p>【備考】 ' + formData.remarks + '</p>' +
+                                   '<p>メールアドレスへご予約内容を送信しました。<br>予約内容をご確認ください。</p>';
+
+  document.querySelector('.container').appendChild(confirmationMessage);
+}
+
+function scrollToRemarks() {
+  const remarks = document.getElementById("remarks");
+  const yOffset = window.innerWidth <= 600 ? 50 : 20; // スマートフォンの場合、余白を増やす
+  window.scrollTo({
+    top: remarks.offsetTop - yOffset,
+    behavior: "smooth"
+  });
+}
+
+document.getElementById("remarks").addEventListener("focus", function() {
+  scrollToRemarks();
+});
+
+</script>
+ </body>
+</html>
