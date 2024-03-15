@@ -3,7 +3,7 @@
 
 1. code.gsの編集
 ```var calendarId = 'Your calender ID';のYour calender ID```
-を、お客様のGoogleカレンダーIDに書き換えてください。
+GoogleカレンダーIDに書き換えてください。
 
 以下のコードの時間を、店舗の営業時間に合わせて書き換えてください。
 
